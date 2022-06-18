@@ -10,18 +10,14 @@ d.addEventListener("DOMContentLoaded",(e)=>{
 
 const fetchData=async (position)=>{
     const {latitude,longitude}=position.coords;
-    console.log(position); 
-    console.log(latitude);
-    console.log(longitude);
+    
   try {
     let res= await fetch(`https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${latitude}&lon=${longitude}&appid=${API_KEY}`);
     let json=await res.json();
     if(!res.ok) throw {status:res.status,statusText:res.statusText};
-    console.log(json);
     setWeatherData(json); 
 
   } catch (err) {
-      console.log(err);
      let message =err.statusText || "ocurrio un error";
   }
 
@@ -32,7 +28,6 @@ const onLoad=()=>{
     console.log(navigator.geolocation);
 };
 const setWeatherData=(data)=>{
-  console.log(data);
   const weatherData={
     location:data.name,
     description:data.weather[0].main,
@@ -41,10 +36,8 @@ const setWeatherData=(data)=>{
     temperature:data.main.temp,
     date:getDate(),
   };
-  console.log(weatherData);
 
   Object.keys(weatherData).forEach(key=>{
-    console.log( d.getElementById(key).textContent=weatherData[key]);
     d.getElementById(key).textContent=weatherData[key];
   });
   cleanUp();
